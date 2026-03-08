@@ -58,13 +58,12 @@ default = [
 	"element_hacks",
 	"gzip_compression",
 	"io_uring",
-	"jemalloc",
-	"jemalloc_conf",
+	"lz4_compression",
 	"media_thumbnail",
+	"mimalloc",
 	"release_max_log_level",
 	"systemd",
 	"url_preview",
-	"zstd_compression",
 ]
 
 blurhashing = [
@@ -141,6 +140,9 @@ lz4_compression = [
 	"tuwunel-database/lz4_compression",
 	"tuwunel-router/lz4_compression",
 	"tuwunel-service/lz4_compression",
+]
+mimalloc = [
+	"tuwunel-core/mimalloc",
 ]
 media_thumbnail = [
 	"tuwunel-service/media_thumbnail",

@@ -273,6 +273,10 @@ features = ["std"]
 version = "0.6"
 features = ["std"]
 
+[workspace.dependencies.mimalloc]
+version = "0.1"
+default-features = false
+
 [workspace.dependencies.nix]
 version = "0"
 default-features = false
@@ -384,8 +388,6 @@ features = [
 	"lz4",
 	"multi-threaded-cf",
 	"serde1",
-	"zstd",
-	"zstd-static-linking-only",
 ]
 
 [workspace.dependencies.sanitize-filename]

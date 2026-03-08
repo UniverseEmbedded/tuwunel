@@ -3346,8 +3346,8 @@ fn default_rocksdb_max_log_file_size() -> usize {
 fn default_rocksdb_parallelism_threads() -> usize { 0 }
 
 fn default_rocksdb_compression_algo() -> String {
-	cfg!(feature = "zstd_compression")
-		.then_some("zstd")
+	cfg!(feature = "lz4_compression")
+		.then_some("lz4")
 		.unwrap_or("none")
 		.to_owned()
 }
