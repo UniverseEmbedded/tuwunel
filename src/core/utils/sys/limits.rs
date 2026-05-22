@@ -1,8 +1,13 @@
 #[cfg(unix)]
 use nix::sys::resource::{Resource, getrlimit};
+#[cfg(unix)]
 use nix::unistd::{SysconfVar, sysconf};
 
+#[cfg(unix)]
 use crate::{Result, apply, debug, utils::math::ExpectInto};
+
+#[cfg(not(unix))]
+use crate::Result;
 
 #[cfg(unix)]
 /// This is needed for opening lots of file descriptors, which tends to
@@ -100,6 +105,7 @@ pub fn max_threads() -> Result<(usize, usize)> {
 pub fn max_threads() -> Result<(usize, usize)> { Ok((usize::MAX, usize::MAX)) }
 
 /// Get the system's page size in bytes.
+#[cfg(unix)]
 #[inline]
 pub fn page_size() -> Result<usize> {
 	sysconf(SysconfVar::PAGE_SIZE)?
@@ -107,3 +113,17 @@ pub fn page_size() -> Result<usize> {
 		.try_into()
 		.map_err(Into::into)
 }
+
+#[cfg(windows)]
+#[inline]
+pub fn page_size() -> Result<usize> {
+	use windows_sys::Win32::System::SystemInformation::{GetSystemInfo, SYSTEM_INFO};
+
+	let mut sys_info: SYSTEM_INFO = unsafe { std::mem::zeroed() };
+	unsafe { GetSystemInfo(&mut sys_info) };
+	Ok(sys_info.dwPageSize as usize)
+}
+
+#[cfg(not(any(unix, windows)))]
+#[inline]
+pub fn page_size() -> Result<usize> { Ok(4096) }

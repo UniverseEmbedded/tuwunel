@@ -8,8 +8,11 @@ use std::path::PathBuf;
 pub use self::{
 	compute::available_parallelism,
 	limits::*,
-	usage::{statm, thread_usage, usage},
 };
+#[cfg(unix)]
+pub use self::usage::{statm, thread_usage, usage};
+#[cfg(not(unix))]
+pub use self::usage::{thread_usage, usage};
 use crate::{Result, at};
 
 /// Return a possibly corrected std::env::current_exe() even if the path is

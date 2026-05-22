@@ -146,6 +146,12 @@ pub(super) async fn restart(&self, force: bool) -> Result {
 }
 
 #[admin_command]
+#[cfg(not(unix))]
+pub(super) async fn restart(&self, _force: bool) -> Result {
+	self.write_str("Restart is not supported on this platform (Windows).").await
+}
+
+#[admin_command]
 pub(super) async fn shutdown(&self) -> Result {
 	warn!("shutdown command");
 	self.services.server.shutdown()?;
