@@ -688,6 +688,7 @@ default-features = false
 [profile.release]
 strip = "symbols"
 lto = "thin"
+incremental = false
 
 # release profile with debug symbols
 [profile.release-debuginfo]
@@ -755,6 +756,7 @@ strip = "none"
 
 [profile.dev]
 debug = 0
+incremental = false
 #rustflags = [
 #	'--cfg', 'tuwunel_mods',
 #	'-Ztime-passes',
